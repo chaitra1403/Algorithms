@@ -1,0 +1,7 @@
+gnuplot
+
+set xlabel 'inputsize'
+set ylabel 'timetaken'
+set title 'horspool'
+plot 'enhance.txt' using 1:2 title "bestcase" with linespoints, "enhance.txt" using 1:3 title "worstcase" with linespoints
+

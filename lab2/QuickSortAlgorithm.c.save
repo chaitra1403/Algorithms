@@ -1,0 +1,88 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/time.h>
+int a[500];
+int partition(int l,int h)
+{
+	int temp,i,j,pivot;
+	pivot = a[l];
+	i = l;
+	j = h;
+	while(i<=j)
+	{
+		while(a[i]<=pivot && i<=h)
+			i++;
+		while(a[j]>pivot && j>=l)
+			j--;
+		if(i<j)
+		{
+			temp=a[i];
+			a[i]=a[j];
+			a[j]=temp;
+		}
+		else
+		{
+			temp=a[l];
+			a[l]=a[j];
+			a[j]=temp;
+		}
+	}
+	return j;
+}
+void quicksort(int l,int h)
+{
+	if(l<h)
+	{
+		int j = partition(l,h);
+		quicksort(l,j-1);
+		quicksort(j+1,h);
+	}
+}
+void main()
+{
+	int p,q,m,n;
+	FILE *fp;
+	float t1;
+	struct timeval begin,end;
+	int tableno=m,iter[100],num[100];
+	fp=fopen("quick.txt","w");
+	printf("\nEnter number of iterations :\n");
+	scanf("%d",&m);
+	for(q=0;q<m;q++)
+	{
+		printf("\nEnter the number of elements\n");
+		scanf("%d",&n);
+		printf("\nBefore Sorting\n\n");
+		for(p=0;p<n;p++)
+		{
+			a[p] = rand()%100;
+			printf("%d ",a[p]);
+
+		}
+		gettimeofday(&begin,NULL);
+		quicksort(0,n-1);
+		gettimeofday(&end,NULL);
+		printf("\nAfter sorting :");
+		printf("\n----------------------------------------------------------------------------------------------\n");
+		for(p=0;p<n;p++)
+		{
+			printf("%d ",a[p]);
+		}
+		t1 = end.tv_usec - begin.tv_usec;
+		iter[q]=t1;
+		num[q]=n;
+		printf("\nTime taken is %1.2f",t1);
+		fprintf(fp,"%d \t %1.2f \n",n,t1);
+	}
+	printf("\nNo.of elements\tTime taken\n");
+	printf("\n----------------------------------------------------------------------------------------------\n");
+	for(int pq=0;pq<m;pq++)
+	{
+		printf("%d \t|\t %d",num[q],iter[q]);
+	}
+		fclose(fp);
+	printf("\n----------------------------------------------------------------------------------------------\n");
+
+}
+
+

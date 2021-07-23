@@ -1,0 +1,5 @@
+set xlabel 'input'
+set ylabel 'timetaken'
+set title 'QuickSort'
+plot 'quick.txt' using 1:2 with points
+plot 'quick.txt' using 1:2 with linespoints
